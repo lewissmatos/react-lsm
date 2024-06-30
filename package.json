@@ -1,0 +1,43 @@
+{
+	"name": "react-lsm",
+	"version": "1.0.3",
+	"description": "A lightweight react hook for managing localization languages. LSM stands for Localization Storage Manager.",
+	"main": "/dist/index.d.js",
+	"types": "./src/index.d.ts",
+	"scripts": {
+		"build": "babel src --out-dir dist --extensions \".ts,.tsx\"",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.24.7",
+		"@babel/core": "^7.24.7",
+		"@babel/preset-env": "^7.24.7",
+		"@babel/preset-react": "^7.24.7",
+		"@babel/preset-typescript": "^7.24.7",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"typescript": "^5.5.2"
+	},
+	"keywords": [
+		"locale",
+		"localization",
+		"lewis",
+		"lewissmatos",
+		"lewismatos",
+		"lewissmatos.dev",
+		"translate",
+		"lewis",
+		"matos",
+		"react",
+		"Localization State Manager"
+	],
+	"author": {
+		"name": "Lewis S. Matos",
+		"email": "lewissmatos@gmail.com"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	}
+}
