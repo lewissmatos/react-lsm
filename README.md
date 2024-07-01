@@ -46,7 +46,7 @@ import { initLsm, useLsmTranslation } from "react-lsm";
  * second argument is the translations object
  * @comment We recommend to have a separated file for the translations object
  */
-const LsmProvider = initLsm("en-US", {
+const LsmConfiguredProvider = initLsm("en-US", {
 	"en-US": {
 		greeting: "Hello",
 		farewell: "Goodbye",
@@ -89,20 +89,34 @@ const LsmProvider = initLsm("en-US", {
 	},
 });
 
+// App.jsx
 const App = () => {
 	const { translate, setLanguage, language } = useLsmTranslation();
 	return (
-		<LsmProvider>
-			<div>
-				<h1>{translate("greeting")}</h1>
-				<button onClick={() => setLanguage("es-MX")}>Español</button>
-				<button onClick={() => setLanguage("en-US")}>English</button>
-				<p>{language}</p> {/* This will show the current language */}
-				<h1>{translate("farewell")}</h1>
-			</div>
-		</LsmProvider>
+		<LsmConfiguredProvider>
+			<Example />
+		</LsmConfiguredProvider>;
 	);
 };
+
+//Example.jsx
+import { useLsmTranslation } from "react-lsm";
+const Example = () => {
+	const { translate, language, setLanguage } = useLsmTranslation();
+	return (
+		<div>
+			<h1>{translate("greeting")}</h1>
+			<button onClick={() => setLanguage("es-MX")}>Español</button> {/* This will change the language */}
+			<button onClick={() => setLanguage("en-US")}>English</button> {/* This will change the language */}
+			<p>{language}</p> {/* This will show the current language */}
+			<h1>{translate("farewell")}</h1>
+		</div>
+	);
+	// Output: Hello
+	// Output: Hola
+};
+
+
 ```
 
 ## Examples
