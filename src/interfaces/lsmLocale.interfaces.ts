@@ -2,7 +2,7 @@
 export interface ILsmLocaleContextValues {
 	language: string | null;
 	setLanguage: (lang: string) => void;
-	locales: Record<string, any> | null;
+	translations: Record<string, any> | null;
 }
 
 // Define the interface for the hook options
@@ -24,6 +24,6 @@ export type LsmLocaleOptions = {
 };
 
 export interface ILsmLocaleConfig {
-	locales: Record<string, any>;
+	translations: Record<string, any>;
 	fallbackLanguage: string;
 }

@@ -8,28 +8,28 @@ const initialLanguage = localStorage.getItem(localStorageLangKey);
 const LsmLocaleProvider: FC<ILsmLocaleConfig & { children?: ReactNode }> = ({
 	children,
 	fallbackLanguage,
-	locales,
+	translations,
 }) => {
 	/**
 	 * @param {string} initialLanguage - The initial language to use
 	 * @param {string} fallbackLanguage - The fallback language to use
-	 * @param {} locales - The locales to use
+	 * @param {} translations - The translations to use
 	 * */
-	const [language, setLanguage] = useState<keyof typeof locales>(
+	const [language, setLanguage] = useState<keyof typeof translations>(
 		initialLanguage ?? fallbackLanguage
 	);
 
 	/**
 	 * @param lang - The language to set
 	 */
-	const onChangeLanguage = (lang: keyof typeof locales) => {
+	const onChangeLanguage = (lang: keyof typeof translations) => {
 		setLanguage(lang);
 	};
 
 	const contextValue = {
 		language,
 		setLanguage: onChangeLanguage,
-		locales,
+		translations,
 	};
 
 	useEffect(() => {

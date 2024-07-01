@@ -4,28 +4,30 @@ import { useLsmLocaleContext } from "./LsmLocaleContext";
 // Create the hook
 const useLsmLocale = () => {
 	// Get the context
-	let { language, locales, setLanguage } = useLsmLocaleContext();
+	let { language, translations, setLanguage } = useLsmLocaleContext();
 
 	/**
 	 * @function
 	 * @description Create the hook's main function to translate the key and apply the options to format the value
 	 * @param key The key to translate
 	 * @param {LsmLocaleOptions} options The options to format the value with
-	 * @throws Will throw an error if  language is not set, locales are not set, or if the locale for the language is not set.
+	 * @throws Will throw an error if  language is not set, translations are not set, or if the locale for the language is not set.
 	 * @returns The translated value or the key if no translation is found.
 	 */
 	const translate = (key: string, options?: LsmLocaleOptions) => {
 		// Check if the language is set
 		if (!language) throw new Error("language is not set");
 
-		// Check if the locales are set
-		if (!locales) throw new Error("locales are not set");
+		// Check if the translations are set
+		if (!translations) throw new Error("translations are not set");
 
 		// Check if the locale for the language is set
-		if (!locales[language]) throw new Error("locales for language not found");
+		if (!translations[language])
+			throw new Error("translations for language not found");
 
 		// Get the locale data using the language as a key
-		const localeData = locales[language] || Object.values(locales)?.[0] || {};
+		const localeData =
+			translations[language] || Object.values(translations)?.[0] || {};
 
 		// Get the translated value
 		const translatedValue = getKey(key, localeData);

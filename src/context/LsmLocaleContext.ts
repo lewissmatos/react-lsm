@@ -5,7 +5,7 @@ import { ILsmLocaleContextValues } from "../interfaces/lsmLocale.interfaces";
 const LsmLocaleContext = createContext<ILsmLocaleContextValues>({
 	language: null,
 	setLanguage: () => {},
-	locales: null,
+	translations: null,
 });
 
 /**

@@ -1,0 +1,42 @@
+{
+	"en-US": {
+		"greeting": "Hello",
+		"farewell": "Goodbye",
+		"navbar": {
+			"home": "Home",
+			"about": "About",
+			"contact": "Contact"
+		},
+		"activeNotifications": "You have {value} notifications",
+		"info": "information",
+		"submit": "Submit",
+		"loading": "Loading",
+		"orderStatus": "Your order is {status}",
+		"orderStatuses": {
+			"pending": "pending",
+			"processing": "processing",
+			"shipped": "shipped",
+			"delivered": "delivered"
+		}
+	},
+	"es-MX": {
+		"greeting": "Hola",
+		"farewell": "Adiós",
+		"navbar": {
+			"home": "Inicio",
+			"about": "Acerca",
+			"contact": "Contacto"
+		},
+		"activeNotifications": "Tienes {value} notificaciones",
+		"info": "información",
+		"submit": "Enviar",
+		"loading": "Cargando",
+		"orderStatus": "Su orden está {status}",
+		"orderStatuses": {
+			"pending": "pendiente",
+			"processing": "procesando",
+			"shipped": "enviada",
+			"delivered": "entregada"
+		}
+	}
+}

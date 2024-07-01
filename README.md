@@ -43,8 +43,8 @@ import { initLsmLocale, useLsmLocale } from "react-lsm";
  * This is the LSM Provider component
  * It should be placed at the root of your application
  * first argument is the default language / fallback language
- * second argument is the locales object
- * @comment We recommend to have a separated file for the locales object
+ * second argument is the translations object
+ * @comment We recommend to have a separated file for the translations object
  */
 const LsmProvider = initLsmLocale("en-US", {
 	"en-US": {
@@ -160,7 +160,7 @@ import { useLsmLocale } from "react-lsm";
 
 const Example = () => {
 	const { translate } = useLsmLocale();
-	return <h1>{(translate("info"), { capitalize: true })}</h1>;
+	return <h1>{translate("info", { capitalize: true })}</h1>;
 	// Output: Information
 	// Output: Información
 };
@@ -188,13 +188,13 @@ import { useLsmLocale } from "react-lsm";
 
 const Example = () => {
 	const { translate } = useLsmLocale();
-	return <h1>{(translate("greeting"), { lowercase: true })}</h1>;
+	return <h1>{translate("greeting", { lowercase: true })}</h1>;
 	// Output: hello
 	// Output: hola
 };
 ```
 
-#### Replace
+#### Replace 🤔
 
 ```jsx
 import React from "react";
@@ -204,20 +204,17 @@ const Example = () => {
 	const { translate } = useLsmLocale();
 	return (
 		<h1>
-			{
-				(translate("activeNotifications"),
-				{
-					replace: {
-						values: {
-							/*
-							 * The key is the value to be replaced
-							 * The value is the new value
-							 */
-							value: 5,
-						},
+			{translate("activeNotifications", {
+				replace: {
+					values: {
+						/*
+						 * The key is the value to be replaced
+						 * The value is the new value
+						 */
+						value: 5,
 					},
-				})
-			}
+				},
+			})}
 		</h1>
 	);
 	// Output: You have 5 notifications
@@ -232,23 +229,23 @@ import React from "react";
 import { useLsmLocale } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
-	return (
-		<h1>
-			{
-				(translate("orderStatus"),
-				{
-					replace: {
-						values: {
-							status: "pending",
-						},
-					},
-				})
-			}
-		</h1>
-	);
-	// Output: Your order is pending
-	// Output: Su orden está pending ❌ (This is undesirable)
+    const { translate } = useLsmLocale();
+    return (
+        <h1>
+            {
+                translate("orderStatus", {
+                    replace: {
+                        values: {
+                            status: "pending",
+                        },
+                    },
+                }),
+
+            }
+        </h1>
+    );
+    // Output: Your order is pending
+    // Output: Su orden está pending ❌ (This is undesirable)
 };
 ```
 
@@ -262,17 +259,14 @@ const Example = () => {
 	const { translate } = useLsmLocale();
 	return (
 		<h1>
-			{
-				(translate("orderStatus"),
-				{
-					replace: {
-						values: {
-							status: "shipped",
-						},
-						withTranslation: true,
+			{translate("orderStatus", {
+				replace: {
+					values: {
+						status: "orderStatuses.shipped",
 					},
-				})
-			}
+					withTranslation: true,
+				},
+			})}
 		</h1>
 	);
 	// Output: Your order is shipped
@@ -290,16 +284,13 @@ const Example = () => {
 	const { translate } = useLsmLocale();
 	return (
 		<h1>
-			{
-				(translate("orderStatus"),
-				{
-					replace: {
-						values: {
-							status: translate("shipped"),
-						},
+			{translate("orderStatus", {
+				replace: {
+					values: {
+						status: translate("shipped"),
 					},
-				})
-			}
+				},
+			})}
 		</h1>
 	);
 	// Output: Your order is shipped
@@ -307,7 +298,7 @@ const Example = () => {
 };
 ```
 
-#### Mutate: Basic
+#### Mutate: Basic 🤔
 
 ```jsx
 import React from "react";
@@ -319,15 +310,12 @@ const Example = () => {
 	const isLoading = true || false;
 	return (
 		<h1>
-			{
-				(translate("submit"),
-				{
-					mutate: {
-						when: isLoading,
-						value: "loading",
-					},
-				})
-			}
+			{translate("submit", {
+				mutate: {
+					when: isLoading,
+					value: "loading",
+				},
+			})}
 		</h1>
 	);
 	/**
@@ -336,7 +324,7 @@ const Example = () => {
 	 * Output: Enviar
 	 * @condition isLoading = true
 	 * Output: loading
-	 * Output: loading
+	 * Output: loading ❌ (This is undesirable)
 	 */
 };
 ```
@@ -353,16 +341,13 @@ const Example = () => {
 	const isLoading = true || false;
 	return (
 		<h1>
-			{
-				(translate("submit"),
-				{
-					mutate: {
-						when: isLoading,
-						value: "loading",
-						withTranslation: true,
-					},
-				})
-			}
+			{translate("submit", {
+				mutate: {
+					when: isLoading,
+					value: "loading",
+					withTranslation: true,
+				},
+			})}
 		</h1>
 	);
 	/**
@@ -388,15 +373,12 @@ const Example = () => {
 	const isLoading = true || false;
 	return (
 		<h1>
-			{
-				(translate("submit"),
-				{
-					mutate: {
-						when: isLoading,
-						value: translate("loading"),
-					},
-				})
-			}
+			{translate("submit", {
+				mutate: {
+					when: isLoading,
+					value: translate("loading"),
+				},
+			})}
 		</h1>
 	);
 	/**
@@ -422,17 +404,14 @@ const Example = () => {
 	const isLoading = true || false;
 	return (
 		<h1>
-			{
-				(translate("submit"),
-				{
-					mutate: {
-						when: isLoading,
-						value: "loading",
-						withTranslation: true,
-					},
-					endAdornment: "...",
-				})
-			}
+			{translate("submit", {
+				mutate: {
+					when: isLoading,
+					value: "loading",
+					withTranslation: true,
+				},
+				endAdornment: "...",
+			})}
 		</h1>
 	);
 	/**
@@ -458,12 +437,7 @@ const { translate } = useLsmLocale();
 const isLoading = true || false;
 return (
     <h1>
-        {
-            (translate("submit"),
-            {
-                startAdornment: "🚀 "
-            })
-        })
+        {translate("submit", {  startAdornment: "🚀 "})})
     </h1>
     // Output: 🚀 Submit
     // Output: 🚀 Enviar
@@ -482,12 +456,7 @@ const { translate } = useLsmLocale();
 const isLoading = true || false;
 return (
     <h1>
-        {
-            (translate("greeting"),
-            {
-                endAdornment: " 🇩🇴"
-            })
-        })
+        {translate("greeting", { endAdornment: " 🇩🇴" })})
     </h1>
     // Output: Hello 🇩🇴
     // Output: Hola 🇩🇴
