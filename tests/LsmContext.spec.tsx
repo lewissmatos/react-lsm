@@ -1,8 +1,11 @@
 import { renderHook } from "@testing-library/react";
 import React, { act } from "react";
-import translations from "../example/translations.json";
-import { useLsmContext, default as LsmContext } from "./LsmContext";
-import initLsm from "../settings/initLsm";
+import translations from "../examples/translations.json";
+import {
+	useLsmContext,
+	default as LsmContext,
+} from "../src/context/LsmContext";
+import initLsm from "../src/settings/initLsm";
 
 // Mock component to test useLsmContext hook
 const wrapper = ({ children }: { children: React.ReactNode }) => (

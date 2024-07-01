@@ -16,14 +16,14 @@ const useLsmTranslation = () => {
 	 */
 	const translate = (key: string, options?: TranslationOptions) => {
 		// Check if the language is set
-		if (!language) throw new Error("language is not set");
+		if (!language) throw new Error("language is not set!");
 
 		// Check if the translations are set
-		if (!translations) throw new Error("translations are not set");
+		if (!translations) throw new Error("translations are not set!");
 
 		// Check if the locale for the language is set
 		if (!translations[language])
-			throw new Error("translations for language not found");
+			throw new Error("translations for language not found!");
 
 		// Get the locale data using the language as a key
 		const localeData =

@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react";
-import translations from "../example/translations.json";
-import useLsmTranslation from "./useLsmTranslation";
-import { TranslationOptions } from "../interfaces/lsm.interfaces";
+import translations from "../examples/translations.json";
+import useLsmTranslation from "../src/context/useLsmTranslation";
+import { TranslationOptions } from "../src/interfaces/lsm.interfaces";
 
 // Mock component to test useLsmContext hook
-jest.mock("./LsmContext", () => ({
+jest.mock("../src/context/LsmContext.tsx", () => ({
 	useLsmContext: jest.fn(),
 }));
 
@@ -18,17 +18,19 @@ describe("useLsmTranslation", () => {
 
 	beforeEach(() => {
 		jest.clearAllMocks();
-		require("./LsmContext").useLsmContext.mockImplementation(
+		require("../src/context/LsmContext.tsx").useLsmContext.mockImplementation(
 			() => defaultContext
 		);
 	});
 
 	// Throw an Error if the the translations do not exist
 	it("should throw an error if translations are not set", () => {
-		require("./LsmContext").useLsmContext.mockImplementation(() => ({
-			...defaultContext,
-			translations: null,
-		}));
+		require("../src/context/LsmContext.tsx").useLsmContext.mockImplementation(
+			() => ({
+				...defaultContext,
+				translations: null,
+			})
+		);
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(() => result.current.translate("greeting")).toThrow(
 			"translations are not set"
@@ -37,10 +39,12 @@ describe("useLsmTranslation", () => {
 
 	// Throw an Error if the the language does not exist
 	it("should throw an error if language is not set", () => {
-		require("./LsmContext").useLsmContext.mockImplementation(() => ({
-			...defaultContext,
-			language: null,
-		}));
+		require("../src/context/LsmContext.tsx").useLsmContext.mockImplementation(
+			() => ({
+				...defaultContext,
+				language: null,
+			})
+		);
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(() => result.current.translate("greeting")).toThrow(
 			"language is not set"
@@ -49,10 +53,12 @@ describe("useLsmTranslation", () => {
 
 	// Throw an Error if the the locale data for a specific language does not exist
 	it("should throw an error if the locale for the language is not set", () => {
-		require("./LsmContext").useLsmContext.mockImplementation(() => ({
-			...defaultContext,
-			translations: {},
-		}));
+		require("../src/context/LsmContext.tsx").useLsmContext.mockImplementation(
+			() => ({
+				...defaultContext,
+				translations: {},
+			})
+		);
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(() => result.current.translate("greeting")).toThrow(
 			"translations for language not found"
@@ -132,11 +138,13 @@ describe("useLsmTranslation", () => {
 
 	// Replace
 	it("should return a replaced word in the value if *replace* option is sent", () => {
-		require("./LsmContext").useLsmContext.mockImplementation(() => ({
-			...defaultContext,
-			language: "es-MX",
-			translations,
-		}));
+		require("../src/context/LsmContext.tsx").useLsmContext.mockImplementation(
+			() => ({
+				...defaultContext,
+				language: "es-MX",
+				translations,
+			})
+		);
 		const { result } = renderHook(() => useLsmTranslation());
 		const options: TranslationOptions = {
 			replace: {

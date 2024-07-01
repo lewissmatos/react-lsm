@@ -1,15 +1,13 @@
-import React, { useState, ReactNode, FC, useEffect } from "react";
-import LsmContext from "../context/LsmContext";
+import React, { useState, FC, useEffect } from "react";
+import { LsmContext } from "../context/LsmContext";
 import { ILsmConfig } from "../interfaces/lsm.interfaces";
 
-// Set the default language key for the local storage access
-const localStorageLangKey = "lsmLanguage";
-const initialLanguage = localStorage.getItem(localStorageLangKey);
-const LsmProvider: FC<ILsmConfig & { children?: ReactNode }> = ({
-	children,
-	fallbackLanguage,
-	translations,
-}) => {
+const LsmProvider: FC<
+	ILsmConfig & { children?: JSX.Element | JSX.Element[] }
+> = ({ children, fallbackLanguage, translations }) => {
+	const localStorageLangKey = "lsmLanguage";
+	const initialLanguage = localStorage.getItem(localStorageLangKey);
+
 	/**
 	 * @param {string} initialLanguage - The initial language to use
 	 * @param {string} fallbackLanguage - The fallback language to use

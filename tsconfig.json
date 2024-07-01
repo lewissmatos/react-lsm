@@ -10,5 +10,10 @@
 		"esModuleInterop": true,
 		"lib": ["es6", "dom", "es2023"]
 	},
-	"include": ["src"]
+	"include": [
+		"src",
+		"tests/initLsm.spec.tsx",
+		"tests/LsmContext.spec.tsx",
+		"tests/useLsmTranslation.spec.tsx"
+	]
 }

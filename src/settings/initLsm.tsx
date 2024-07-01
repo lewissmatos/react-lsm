@@ -17,7 +17,7 @@ const initLsm = (
 ) => {
 	// Return a component
 	const ConfiguredLsmProvider: React.FC<{
-		children?: React.ReactNode;
+		children?: JSX.Element | JSX.Element[];
 	}> = ({ children }) => {
 		return (
 			<LsmProvider

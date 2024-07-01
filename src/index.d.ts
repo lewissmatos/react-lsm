@@ -3,17 +3,17 @@ import {
 	ILsmContextProps,
 	ILsmConfig,
 } from "./interfaces/lsm.interfaces";
-import LsmContext from "./context/LsmContext";
+import { LsmContext } from "./context/LsmContext";
 import LsmProvider from "./Provider/LsmProvider";
-import useLsm from "./context/useLsmTranslation";
+import useLsmTranslation from "./context/useLsmTranslation";
 import initLsm from "./settings/initLsm";
 
 export {
+	initLsm,
+	LsmContext,
 	ILsmContextProps,
 	TranslationOptions,
 	ILsmConfig,
-	useLsm,
 	LsmProvider,
-	LsmContext,
-	initLsm,
+	useLsmTranslation,
 };

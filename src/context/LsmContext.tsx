@@ -2,11 +2,7 @@ import { createContext, useContext } from "react";
 import { ILsmContextProps } from "../interfaces/lsm.interfaces";
 
 // Create the global context
-const LsmContext = createContext<ILsmContextProps>({
-	language: null,
-	setLanguage: () => {},
-	translations: null,
-});
+export const LsmContext = createContext<ILsmContextProps | null>(null);
 
 /**
  * @description Hook to get the LsmContext values
@@ -23,5 +19,3 @@ export const useLsmContext = () => {
 	}
 	return context;
 };
-
-export default LsmContext;
