@@ -1,11 +1,11 @@
 import React, { useState, ReactNode, FC, useEffect } from "react";
-import LsmLocaleContext from "../context/LsmLocaleContext";
-import { ILsmLocaleConfig } from "../interfaces/lsmLocale.interfaces";
+import LsmContext from "../context/LsmContext";
+import { ILsmConfig } from "../interfaces/lsm.interfaces";
 
 // Set the default language key for the local storage access
 const localStorageLangKey = "lsmLanguage";
 const initialLanguage = localStorage.getItem(localStorageLangKey);
-const LsmLocaleProvider: FC<ILsmLocaleConfig & { children?: ReactNode }> = ({
+const LsmProvider: FC<ILsmConfig & { children?: ReactNode }> = ({
 	children,
 	fallbackLanguage,
 	translations,
@@ -38,10 +38,8 @@ const LsmLocaleProvider: FC<ILsmLocaleConfig & { children?: ReactNode }> = ({
 	}, [language]);
 
 	return (
-		<LsmLocaleContext.Provider value={contextValue}>
-			{children}
-		</LsmLocaleContext.Provider>
+		<LsmContext.Provider value={contextValue}>{children}</LsmContext.Provider>
 	);
 };
 
-export default LsmLocaleProvider;
+export default LsmProvider;

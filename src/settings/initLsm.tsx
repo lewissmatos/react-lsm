@@ -1,35 +1,35 @@
 import React from "react";
-import LsmLocaleProvider from "../Provider/LsmLocaleProvider";
+import LsmProvider from "../Provider/LsmProvider";
 
 /**
  * @param {string} fallbackLanguage
  * @param {Object} translations
  * @returns {Object}
  * @example:
- * const LsmProvider = initLsmLocale("en-US", {
+ * const LsmProvider = initLsm("en-US", {
 	"en-US": { greeting: "Hello", },
 	"es-MX": { greeting: "Hola",  },
 	});
  */
-const initLsmLocale = (
+const initLsm = (
 	fallbackLanguage: string,
 	translations: { [key: string]: any }
 ) => {
 	// Return a component
-	const ConfiguredLsmLocaleProvider: React.FC<{
+	const ConfiguredLsmProvider: React.FC<{
 		children?: React.ReactNode;
 	}> = ({ children }) => {
 		return (
-			<LsmLocaleProvider
+			<LsmProvider
 				fallbackLanguage={fallbackLanguage}
 				translations={translations}
 			>
 				{children}
-			</LsmLocaleProvider>
+			</LsmProvider>
 		);
 	};
 
-	return ConfiguredLsmLocaleProvider;
+	return ConfiguredLsmProvider;
 };
 
-export default initLsmLocale;
+export default initLsm;

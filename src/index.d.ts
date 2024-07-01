@@ -1,19 +1,19 @@
 import {
-	LsmLocaleOptions,
-	ILsmLocaleContextValues,
-	ILsmLocaleConfig,
-} from "./interfaces/lsmLocale.interfaces";
-import LsmLocaleContext from "./context/LsmLocaleContext";
-import LsmLocaleProvider from "./Provider/LsmLocaleProvider";
-import useLsmLocale from "./context/useLsmLocale";
-import initLsmLocale from "./settings/initLsmLocale";
+	TranslationOptions,
+	ILsmContextProps,
+	ILsmConfig,
+} from "./interfaces/lsm.interfaces";
+import LsmContext from "./context/LsmContext";
+import LsmProvider from "./Provider/LsmProvider";
+import useLsm from "./context/useLsmTranslation";
+import initLsm from "./settings/initLsm";
 
 export {
-	ILsmLocaleContextValues,
-	LsmLocaleOptions,
-	ILsmLocaleConfig,
-	useLsmLocale,
-	LsmLocaleProvider,
-	LsmLocaleContext,
-	initLsmLocale,
+	ILsmContextProps,
+	TranslationOptions,
+	ILsmConfig,
+	useLsm,
+	LsmProvider,
+	LsmContext,
+	initLsm,
 };

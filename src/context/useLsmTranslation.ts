@@ -1,20 +1,20 @@
-import { LsmLocaleOptions } from "../interfaces/lsmLocale.interfaces";
-import { useLsmLocaleContext } from "./LsmLocaleContext";
+import { TranslationOptions } from "../interfaces/lsm.interfaces";
+import { useLsmContext } from "./LsmContext";
 
 // Create the hook
-const useLsmLocale = () => {
+const useLsmTranslation = () => {
 	// Get the context
-	let { language, translations, setLanguage } = useLsmLocaleContext();
+	let { language, translations, setLanguage } = useLsmContext();
 
 	/**
 	 * @function
 	 * @description Create the hook's main function to translate the key and apply the options to format the value
 	 * @param key The key to translate
-	 * @param {LsmLocaleOptions} options The options to format the value with
+	 * @param {TranslationOptions} options The options to format the value with
 	 * @throws Will throw an error if  language is not set, translations are not set, or if the locale for the language is not set.
 	 * @returns The translated value or the key if no translation is found.
 	 */
-	const translate = (key: string, options?: LsmLocaleOptions) => {
+	const translate = (key: string, options?: TranslationOptions) => {
 		// Check if the language is set
 		if (!language) throw new Error("language is not set");
 
@@ -34,9 +34,8 @@ const useLsmLocale = () => {
 
 		// Format the value using the options
 		const value =
-			(options
-				? formatLocaleValue(translatedValue, options)
-				: translatedValue) || key;
+			(options ? formatValue(translatedValue, options) : translatedValue) ||
+			key;
 		return value;
 	};
 
@@ -55,9 +54,9 @@ const useLsmLocale = () => {
 	 * - replace: Replace the value with the specified values
 	 * - mutate: Mutate the value based on the specified options
 	 */
-	const formatLocaleValue = (
+	const formatValue = (
 		value: string,
-		options: LsmLocaleOptions = {}
+		options: TranslationOptions = {}
 	): string => {
 		/*
 		 * The capitalize option will capitalize the first letter of the value
@@ -151,4 +150,4 @@ const getKey = (key: string, localeData: {}): string => {
 			?.toString() || key
 	);
 };
-export default useLsmLocale;
+export default useLsmTranslation;

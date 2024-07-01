@@ -1,6 +1,6 @@
-import LsmLocaleProvider from "./Provider/LsmLocaleProvider";
-import LsmLocaleContext from "./context/LsmLocaleContext";
-import initLsmLocale from "./settings/initLsmLocale";
-import useLsmLocale from "./context/useLsmLocale";
+import LsmProvider from "./Provider/LsmProvider";
+import LsmContext from "./context/LsmContext";
+import initLsm from "./settings/initLsm";
+import useLsm from "./context/useLsmTranslation";
 
-export { useLsmLocale, LsmLocaleProvider, LsmLocaleContext, initLsmLocale };
+export { useLsm, LsmProvider, LsmContext, initLsm };

@@ -37,7 +37,7 @@ npm install react-lsm
 
 ```jsx
 import React from "react";
-import { initLsmLocale, useLsmLocale } from "react-lsm";
+import { initLsm, useLsm } from "react-lsm";
 
 /**
  * This is the LSM Provider component
@@ -46,7 +46,7 @@ import { initLsmLocale, useLsmLocale } from "react-lsm";
  * second argument is the translations object
  * @comment We recommend to have a separated file for the translations object
  */
-const LsmProvider = initLsmLocale("en-US", {
+const LsmProvider = initLsm("en-US", {
 	"en-US": {
 		greeting: "Hello",
 		farewell: "Goodbye",
@@ -90,7 +90,7 @@ const LsmProvider = initLsmLocale("en-US", {
 });
 
 const App = () => {
-	const { translate, setLanguage, language } = useLsmLocale();
+	const { translate, setLanguage, language } = useLsm();
 	return (
 		<LsmProvider>
 			<div>
@@ -113,10 +113,10 @@ For convenience, the following examples are provided. We are going to use Englis
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 	return <h1>{translate("greeting")}</h1>;
 	// Output: Hello
 	// Output: Hola
@@ -134,7 +134,7 @@ const Example = () => {
  * - replace: Replace the value with the specified values
  * - mutate: Mutate the value based on the specified options
  */
-type LsmLocaleOptions = {
+type TranslationOptions = {
 	capitalize?: boolean;
 	uppercase?: boolean;
 	lowercase?: boolean;
@@ -156,10 +156,10 @@ type LsmLocaleOptions = {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 	return <h1>{translate("info", { capitalize: true })}</h1>;
 	// Output: Information
 	// Output: Información
@@ -170,10 +170,10 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 	return <h1>{(translate("greeting"), { uppercase: true })}</h1>;
 	// Output: HELLO
 	// Output: HOLA
@@ -184,10 +184,10 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 	return <h1>{translate("greeting", { lowercase: true })}</h1>;
 	// Output: hello
 	// Output: hola
@@ -198,22 +198,18 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
+	/*
+	 * The key is the value to be replaced
+	 * The value is the new value
+	 */
 	return (
 		<h1>
 			{translate("activeNotifications", {
-				replace: {
-					values: {
-						/*
-						 * The key is the value to be replaced
-						 * The value is the new value
-						 */
-						value: 5,
-					},
-				},
+				replace: { values: { value: 5 } },
 			})}
 		</h1>
 	);
@@ -226,10 +222,10 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-    const { translate } = useLsmLocale();
+    const { translate } = useLsm();
     return (
         <h1>
             {
@@ -240,7 +236,6 @@ const Example = () => {
                         },
                     },
                 }),
-
             }
         </h1>
     );
@@ -253,17 +248,15 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 	return (
 		<h1>
 			{translate("orderStatus", {
 				replace: {
-					values: {
-						status: "orderStatuses.shipped",
-					},
+					values: { status: "orderStatuses.shipped" },
 					withTranslation: true,
 				},
 			})}
@@ -278,18 +271,14 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 	return (
 		<h1>
 			{translate("orderStatus", {
-				replace: {
-					values: {
-						status: translate("shipped"),
-					},
-				},
+				replace: { values: { status: translate("shipped") } },
 			})}
 		</h1>
 	);
@@ -302,19 +291,16 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 
 	const isLoading = true || false;
 	return (
 		<h1>
 			{translate("submit", {
-				mutate: {
-					when: isLoading,
-					value: "loading",
-				},
+				mutate: { when: isLoading, value: "loading" },
 			})}
 		</h1>
 	);
@@ -333,20 +319,16 @@ const Example = () => {
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 
 	const isLoading = true || false;
 	return (
 		<h1>
 			{translate("submit", {
-				mutate: {
-					when: isLoading,
-					value: "loading",
-					withTranslation: true,
-				},
+				mutate: { when: isLoading, value: "loading", withTranslation: true },
 			})}
 		</h1>
 	);
@@ -361,14 +343,14 @@ const Example = () => {
 };
 ```
 
-#### Mutate, Explicit translation (Manual translation)
+#### Mutate, Explicit translation (Manual translation) 🤔
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+	const { translate } = useLsm();
 
 	const isLoading = true || false;
 	return (
@@ -392,14 +374,52 @@ const Example = () => {
 };
 ```
 
-#### Mutate, With Translation + End Adornment
+#### Start Adornment
 
 ```jsx
 import React from "react";
-import { useLsmLocale } from "react-lsm";
+import { useLsm } from "react-lsm";
 
 const Example = () => {
-	const { translate } = useLsmLocale();
+const { translate } = useLsm();
+
+const isLoading = true || false;
+return (
+    <h1>
+        {translate("submit", {startAdornment: "🚀 "})})
+    </h1>
+    // Output: 🚀 Submit
+    // Output: 🚀 Enviar
+}
+```
+
+#### End Adornment
+
+```jsx
+import React from "react";
+import { useLsm } from "react-lsm";
+
+const Example = () => {
+const { translate } = useLsm();
+
+const isLoading = true || false;
+return (
+    <h1>
+        {translate("greeting", {endAdornment: " 🇩🇴"})})
+    </h1>
+    // Output: Hello 🇩🇴
+    // Output: Hola 🇩🇴
+}
+```
+
+#### Mutate, With Translation + End Adornment ✅
+
+```jsx
+import React from "react";
+import { useLsm } from "react-lsm";
+
+const Example = () => {
+	const { translate } = useLsm();
 
 	const isLoading = true || false;
 	return (
@@ -423,42 +443,4 @@ const Example = () => {
 	 * Output: Cargando...
 	 */
 };
-```
-
-#### Start Adornment
-
-```jsx
-import React from "react";
-import { useLsmLocale } from "react-lsm";
-
-const Example = () => {
-const { translate } = useLsmLocale();
-
-const isLoading = true || false;
-return (
-    <h1>
-        {translate("submit", {  startAdornment: "🚀 "})})
-    </h1>
-    // Output: 🚀 Submit
-    // Output: 🚀 Enviar
-}
-```
-
-#### End Adornment
-
-```jsx
-import React from "react";
-import { useLsmLocale } from "react-lsm";
-
-const Example = () => {
-const { translate } = useLsmLocale();
-
-const isLoading = true || false;
-return (
-    <h1>
-        {translate("greeting", { endAdornment: " 🇩🇴" })})
-    </h1>
-    // Output: Hello 🇩🇴
-    // Output: Hola 🇩🇴
-}
 ```

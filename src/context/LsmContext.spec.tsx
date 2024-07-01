@@ -1,33 +1,30 @@
 import { renderHook } from "@testing-library/react";
 import React, { act } from "react";
 import translations from "../example/translations.json";
-import {
-	useLsmLocaleContext,
-	default as LsmLocaleContext,
-} from "./LsmLocaleContext";
-import initLsmLocale from "../settings/initLsmLocale";
+import { useLsmContext, default as LsmContext } from "./LsmContext";
+import initLsm from "../settings/initLsm";
 
-// Mock component to test useLsmLocaleContext hook
+// Mock component to test useLsmContext hook
 const wrapper = ({ children }: { children: React.ReactNode }) => (
-	<LsmLocaleContext.Provider
+	<LsmContext.Provider
 		value={{ language: "en-US", setLanguage: jest.fn(), translations }}
 	>
 		{children}
-	</LsmLocaleContext.Provider>
+	</LsmContext.Provider>
 );
 
-describe("LsmLocaleContext", () => {
-	test("provides default context values within a LsmLocaleProvider", () => {
-		const { result } = renderHook(() => useLsmLocaleContext(), { wrapper });
+describe("LsmContext", () => {
+	test("provides default context values within a LsmProvider", () => {
+		const { result } = renderHook(() => useLsmContext(), { wrapper });
 		expect(result.current.language).toBe("en-US");
 	});
 
 	test("updates the language when setLanguage is called", () => {
-		const Provider = initLsmLocale("en-US", translations);
+		const Provider = initLsm("en-US", translations);
 		// Wrap the hook with the context provider
 		const wrapper = ({ children }: any) => <Provider>{children}</Provider>;
 		// Render the hook within the context provider
-		const { result } = renderHook(() => useLsmLocaleContext(), { wrapper });
+		const { result } = renderHook(() => useLsmContext(), { wrapper });
 		// Use act to simulate the state update
 		act(() => {
 			result.current.setLanguage("es-MX");

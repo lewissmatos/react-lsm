@@ -1,12 +1,12 @@
 // Define the interface for the Context and the Provider
-export interface ILsmLocaleContextValues {
+export interface ILsmContextProps {
 	language: string | null;
 	setLanguage: (lang: string) => void;
 	translations: Record<string, any> | null;
 }
 
 // Define the interface for the hook options
-export type LsmLocaleOptions = {
+export type TranslationOptions = {
 	capitalize?: boolean;
 	uppercase?: boolean;
 	lowercase?: boolean;
@@ -23,7 +23,7 @@ export type LsmLocaleOptions = {
 	endAdornment?: string;
 };
 
-export interface ILsmLocaleConfig {
+export interface ILsmConfig {
 	translations: Record<string, any>;
 	fallbackLanguage: string;
 }
