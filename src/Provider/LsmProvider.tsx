@@ -1,4 +1,4 @@
-import React, { useState, FC, useEffect } from "react";
+import React, { useState, FC, useEffect, useMemo } from "react";
 import { LsmContext } from "../context/LsmContext";
 import { ILsmConfig } from "../interfaces/lsm.interfaces";
 
@@ -24,11 +24,13 @@ const LsmProvider: FC<
 		setLanguage(lang);
 	};
 
-	const contextValue = {
-		language,
-		setLanguage: onChangeLanguage,
-		translations,
-	};
+	const contextValue = useMemo(() => {
+		return {
+			language,
+			setLanguage: onChangeLanguage,
+			translations,
+		};
+	}, [language, onChangeLanguage, translations]);
 
 	useEffect(() => {
 		// Set the language in local storage each time the language changes
@@ -39,5 +41,3 @@ const LsmProvider: FC<
 		<LsmContext.Provider value={contextValue}>{children}</LsmContext.Provider>
 	);
 };
-
-export default LsmProvider;

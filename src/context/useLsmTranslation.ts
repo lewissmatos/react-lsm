@@ -1,10 +1,11 @@
+import { useRef } from "react";
 import { TranslationOptions } from "../interfaces/lsm.interfaces";
 import { useLsmContext } from "./LsmContext";
 
 // Create the hook
 const useLsmTranslation = () => {
 	// Get the context
-	let { language, translations, setLanguage } = useLsmContext();
+	const { language, translations, setLanguage } = useLsmContext();
 
 	/**
 	 * @function
