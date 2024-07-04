@@ -1,23 +1,32 @@
-# react-lsm
+# React Localization Storage Manager
 
-### React Localization Storage Manager
+![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/112432349/7cca6238-f412-4f98-86ad-f7d25ba6b6d8)
+
+## Package 
+```js
+ react-lsm
+```
 
 A simple library to manage localization storage in React applications.
 This does not require any additional dependencies.
 Simpler, smaller, and easier to use than other libraries.
 
-### Prerequisites
+## Prerequisites
 
 - React 18.3.1 or later
 - React-DOM 18.3.1 or later
 
-### License
+## License
 
-**MIT**
+##### **MIT** :copyright:
 
-### Author
+## Author
 
-**Lewis S. Matos**
+
+
+#### **Lewis S. Matos**
+
+
 
 <!-- ```markdown
 For more information, see the [Author Page](https://lewissmatos.dev)
@@ -46,6 +55,7 @@ import { initLsm, useLsmTranslation } from "react-lsm";
  * second argument is the translations object
  * @comment We recommend to have a separated file for the translations object
  */
+
 const LsmConfiguredProvider = initLsm("en-US", {
 	"en-US": {
 		greeting: "Hello",
@@ -90,6 +100,7 @@ const LsmConfiguredProvider = initLsm("en-US", {
 });
 
 // App.jsx
+
 const App = () => {
 	const { translate, setLanguage, language } = useLsmTranslation();
 	return (
@@ -98,8 +109,11 @@ const App = () => {
 		</LsmConfiguredProvider>;
 	);
 };
+```
 
-//Example.jsx
+#### Example.jsx
+
+```jsx
 import { useLsmTranslation } from "react-lsm";
 const Example = () => {
 	const { translate, language, setLanguage } = useLsmTranslation();
@@ -117,8 +131,8 @@ const Example = () => {
 };
 
 
-```
 
+```
 ## Examples
 
 For convenience, the following examples are provided. We are going to use English and Spanish as the languages for the examples.
@@ -137,7 +151,7 @@ const Example = () => {
 };
 ```
 
-### Options Usage
+### Options Usage 
 
 ```ts
 /**
@@ -166,7 +180,7 @@ type TranslationOptions = {
 };
 ```
 
-#### Capitalize
+#### Capitalize :a:
 
 ```jsx
 import React from "react";
@@ -180,7 +194,7 @@ const Example = () => {
 };
 ```
 
-#### Uppercase
+#### Uppercase :capital_abcd:
 
 ```jsx
 import React from "react";
@@ -194,7 +208,7 @@ const Example = () => {
 };
 ```
 
-#### Lowercase
+#### Lowercase  :abcd:
 
 ```jsx
 import React from "react";
@@ -208,7 +222,7 @@ const Example = () => {
 };
 ```
 
-#### Replace 🤔
+#### Replace :repeat:
 
 ```jsx
 import React from "react";
@@ -281,7 +295,7 @@ const Example = () => {
 };
 ```
 
-#### Replace, Explicit translation (Manual translation)
+#### Replace, Explicit translation (Manual translation) :arrows_clockwise:
 
 ```jsx
 import React from "react";
