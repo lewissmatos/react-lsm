@@ -1,6 +1,6 @@
 # React Localization Storage Manager / react-lsm
 
-![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/112432349/7cca6238-f412-4f98-86ad-f7d25ba6b6d8)
+![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/63300185/39ef7d79-44f1-46a9-b349-61ba01c96881)
 
 ## Package
 
