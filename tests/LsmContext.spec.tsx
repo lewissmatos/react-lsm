@@ -10,7 +10,12 @@ import initLsm from "../src/settings/initLsm";
 // Mock component to test useLsmContext hook
 const wrapper = ({ children }: { children: React.ReactNode }) => (
 	<LsmContext.Provider
-		value={{ language: "en-US", setLanguage: jest.fn(), translations }}
+		value={{
+			language: "en-US",
+			setLanguage: jest.fn(),
+			translations,
+			availableLanguages: Object.keys(translations ?? {}),
+		}}
 	>
 		{children}
 	</LsmContext.Provider>

@@ -4,9 +4,9 @@ import { useLsmContext } from "./LsmContext";
 // Create the hook
 const useLsmTranslation = () => {
 	// Get the context
-	const { language, translations, setLanguage } = useLsmContext();
+	const { language, translations, setLanguage, availableLanguages } =
+		useLsmContext();
 
-	let availableLanguages;
 	/**
 	 * @function
 	 * @description Create the hook's main function to translate the key and apply the options to format the value
@@ -26,7 +26,6 @@ const useLsmTranslation = () => {
 		if (!translations[language])
 			throw new Error("translations for language not found!");
 
-		availableLanguages = Object.keys(translations);
 		// Get the locale data using the language as a key
 		const localeData =
 			translations[language] || Object.values(translations)?.[0] || {};
@@ -37,7 +36,7 @@ const useLsmTranslation = () => {
 		// Format the value using the options
 		const value =
 			(options ? formatValue(translatedValue, options) : translatedValue) ||
-			`*_${key}_*`;
+			`_${key}_`;
 		return value as string;
 	};
 
@@ -187,7 +186,7 @@ const useLsmTranslation = () => {
 		translate,
 		language: language as string,
 		setLanguage,
-		availableLanguages: (availableLanguages as unknown as string[]) ?? [],
+		availableLanguages,
 	};
 };
 
@@ -206,7 +205,7 @@ const getKey = (key: string, localeData: {}): string => {
 
 	// Check if the key contains a dot, indicating a nested key
 	if (!key.includes(".")) {
-		return localeData[key as keyof typeof localeData] || `*_${key}_*`;
+		return localeData[key as keyof typeof localeData] || `_${key}_`;
 	}
 
 	// In case of nested keys, split the key into an array and reduce it using the localeData object
@@ -214,7 +213,7 @@ const getKey = (key: string, localeData: {}): string => {
 		key
 			?.split(".")
 			?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
-			?.toString() || `*_${key}_*`
+			?.toString() || `_${key}_`
 	);
 };
 export default useLsmTranslation;

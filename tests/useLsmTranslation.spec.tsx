@@ -14,6 +14,7 @@ describe("useLsmTranslation", () => {
 		language: "en-US",
 		translations,
 		setLanguage: mockSetLanguage,
+		availableLanguages: Object.keys(translations ?? {}),
 	};
 
 	beforeEach(() => {
@@ -85,7 +86,7 @@ describe("useLsmTranslation", () => {
 	it("should return the key if no translation is found", () => {
 		const unknownKey = "unknown";
 		const { result } = renderHook(() => useLsmTranslation());
-		expect(result.current.translate(unknownKey)).toEqual(`*_${unknownKey}_*`);
+		expect(result.current.translate(unknownKey)).toEqual(`_${unknownKey}_`);
 	});
 
 	// Capitalize
@@ -239,5 +240,56 @@ describe("useLsmTranslation", () => {
 		const unknownKey = "unknown";
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate(unknownKey, options)).toEqual(unknownKey);
+	});
+
+	// Prefix Content
+	it("should return the prefix content if *prefixContent* option is sent", () => {
+		const options: LsmTranslationOptions = {
+			prefixContent: {
+				value: "🚀",
+				when: true,
+			},
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("submit", options)).toEqual(
+			"🚀" + translations["en-US"].submit
+		);
+	});
+	// Suffix Content
+	it("should return the prefix content if *prefixContent* option is sent", () => {
+		const options: LsmTranslationOptions = {
+			suffixContent: {
+				value: "🚀",
+				when: true,
+			},
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("submit", options)).toEqual(
+			translations["en-US"].submit + "🚀"
+		);
+	});
+
+	// Suffix and Prefix Content
+	it("should return the prefix content if *prefixContent* option is sent", () => {
+		const options: LsmTranslationOptions = {
+			prefixContent: {
+				value: "🚀",
+				when: true,
+			},
+			suffixContent: {
+				value: "🚀",
+				when: true,
+			},
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("submit", options)).toEqual(
+			"🚀" + translations["en-US"].submit + "🚀"
+		);
+	});
+
+	// Available Languages
+	it("should return an array of available languages", () => {
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.availableLanguages).toEqual(["en-US", "es-MX"]);
 	});
 });

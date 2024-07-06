@@ -3,6 +3,7 @@ export interface ILsmContextProps {
 	language: string | null;
 	setLanguage: (lang: string) => void;
 	translations: Record<string, any> | null;
+	availableLanguages: string[];
 }
 
 export type LsmTextCase = "capitalize" | "uppercase" | "lowercase";
