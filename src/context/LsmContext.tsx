@@ -19,3 +19,5 @@ export const useLsmContext = () => {
 	}
 	return context;
 };
+
+export default LsmContext;

@@ -1,9 +1,9 @@
 import React, { useState, FC, useEffect, useMemo } from "react";
 import { LsmContext } from "../context/LsmContext";
-import { ILsmConfig } from "../interfaces/lsm.interfaces";
+import { ILsmInitialConfig } from "../interfaces/lsm.interfaces";
 
 const LsmProvider: FC<
-	ILsmConfig & { children?: JSX.Element | JSX.Element[] }
+	ILsmInitialConfig & { children?: JSX.Element | JSX.Element[] }
 > = ({ children, fallbackLanguage, translations }) => {
 	const localStorageLangKey = "lsmLanguage";
 	const initialLanguage = localStorage.getItem(localStorageLangKey);
@@ -22,6 +22,7 @@ const LsmProvider: FC<
 	 */
 	const onChangeLanguage = (lang: keyof typeof translations) => {
 		setLanguage(lang);
+		return lang;
 	};
 
 	const contextValue = useMemo(() => {
@@ -41,3 +42,5 @@ const LsmProvider: FC<
 		<LsmContext.Provider value={contextValue}>{children}</LsmContext.Provider>
 	);
 };
+
+export default LsmProvider;

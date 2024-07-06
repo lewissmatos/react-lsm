@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { TranslationOptions } from "../interfaces/lsm.interfaces";
+import { LsmTranslationOptions } from "../interfaces/lsm.interfaces";
 import { useLsmContext } from "./LsmContext";
 
 // Create the hook
@@ -7,6 +6,7 @@ const useLsmTranslation = () => {
 	// Get the context
 	const { language, translations, setLanguage } = useLsmContext();
 
+	let availableLanguages;
 	/**
 	 * @function
 	 * @description Create the hook's main function to translate the key and apply the options to format the value
@@ -15,7 +15,7 @@ const useLsmTranslation = () => {
 	 * @throws Will throw an error if  language is not set, translations are not set, or if the locale for the language is not set.
 	 * @returns The translated value or the key if no translation is found.
 	 */
-	const translate = (key: string, options?: TranslationOptions) => {
+	const translate = (key: string, options?: LsmTranslationOptions) => {
 		// Check if the language is set
 		if (!language) throw new Error("language is not set!");
 
@@ -26,18 +26,19 @@ const useLsmTranslation = () => {
 		if (!translations[language])
 			throw new Error("translations for language not found!");
 
+		availableLanguages = Object.keys(translations);
 		// Get the locale data using the language as a key
 		const localeData =
 			translations[language] || Object.values(translations)?.[0] || {};
 
 		// Get the translated value
-		const translatedValue = getKey(key, localeData);
+		const translatedValue = getKey(key, localeData) as string;
 
 		// Format the value using the options
 		const value =
 			(options ? formatValue(translatedValue, options) : translatedValue) ||
-			key;
-		return value;
+			`*_${key}_*`;
+		return value as string;
 	};
 
 	/**
@@ -49,57 +50,109 @@ const useLsmTranslation = () => {
 	 * @throws Will throw an error if the value is not a string.
 	 *
 	 * The following options are available:
-	 * - capitalize: Capitalize the first letter of the value
-	 * - uppercase: Convert the value to uppercase
-	 * - lowercase: Convert the value to lowercase
+	 * - textCase: Capitalize, uppercase, or lowercase the value
 	 * - replace: Replace the value with the specified values
 	 * - mutate: Mutate the value based on the specified options
 	 */
 	const formatValue = (
 		value: string,
-		options: TranslationOptions = {}
+		options: LsmTranslationOptions = {}
 	): string => {
-		/*
+		if (
+			(options.capitalize || options.uppercase || options.lowercase) &&
+			options.textCase
+		) {
+			throw new Error(
+				"The textCase option cannot be used with the capitalize, uppercase, or lowercase options!"
+			);
+		}
+		/**
+		 * @deprecated This should not be used because it interferes with the textCase option
 		 * The capitalize option will capitalize the first letter of the value
 		 */
 		if (options.capitalize)
 			value = value.charAt(0).toUpperCase() + value.slice(1);
 
-		/*
+		/**
+		 * @deprecated This should not be used because it interferes with the textCase option
 		 * The uppercase option will uppercase the value
 		 */
 		if (options.uppercase) value = value.toUpperCase();
 
-		/*
+		/**
+		 * @deprecated This should not be used because it interferes with the textCase option
 		 * The lowercase option will lowercase the value
 		 */
 		if (options.lowercase) value = value.toLowerCase();
 
-		/*
-		 * The startAdornment option will add the specified value to the beginning of the value
+		/**
+		 * @function
+		 * @description The following options are available:
+		 * The textCase option will capitalize, uppercase, or lowercase the value
 		 */
-		if (options.startAdornment) value = `${options.startAdornment}${value}`;
+
+		if (options.textCase) {
+			const textCases = {
+				capitalize: () => value.charAt(0).toUpperCase() + value.slice(1),
+				uppercase: () => value.toUpperCase(),
+				lowercase: () => value.toLowerCase(),
+			};
+			value = textCases[options.textCase]() ?? value;
+		}
 
 		/*
-		 * The endAdornment option will add the specified value to the end of the value
+		 * The prefixContent option will add the specified value to the beginning of the value
 		 */
-		if (options.endAdornment) value = `${value}${options.endAdornment}`;
+		if (options.prefixContent) {
+			let {
+				when,
+				value: prefixContent,
+				withTranslation,
+			} = options.prefixContent;
+			if (when) {
+				prefixContent = withTranslation
+					? translate(prefixContent ?? "")
+					: prefixContent;
+				value = !!Boolean(prefixContent) ? `${prefixContent}${value}` : value;
+			} else {
+				value = value;
+			}
+		}
+
+		/*
+		 * The suffixContent option will add the specified value to the end of the value
+		 */
+		if (options.suffixContent) {
+			let {
+				when,
+				value: suffixContent,
+				withTranslation,
+			} = options.suffixContent;
+			if (when) {
+				suffixContent = withTranslation
+					? translate(suffixContent ?? "")
+					: suffixContent;
+				value = !!Boolean(suffixContent) ? `${value}${suffixContent}` : value;
+			} else {
+				value = value as string;
+			}
+		}
 
 		/*
 		 * The replace option is an object with the following properties:
 		 * - values: An object with the keys as the placeholder and the values as the replacement
 		 * - withTranslation: Whether to translate the replacement value
 		 */
-		if (options.replace) {
+		if (options?.replace) {
 			let replacedValue = value;
-			Object.entries(options.replace.values).forEach(([key, value]) => {
-				const mustTranslate = options.replace?.withTranslation || false;
+			Object.entries(options?.replace?.values).forEach(([key, value]) => {
+				const mustTranslate = options?.replace?.withTranslation || false;
 				const finalValue = mustTranslate
-					? translate(value?.toString())
+					? translate((value as string)?.toString())
 					: value?.toString();
 				replacedValue = replacedValue?.replace(
 					new RegExp(`{${key}}`, "g"),
-					finalValue
+					finalValue as string
 				);
 			});
 			value = replacedValue;
@@ -110,19 +163,32 @@ const useLsmTranslation = () => {
 		 * - when: Whether to mutate the value
 		 * - value: The value to mutate
 		 * - withTranslation: Whether to translate the value
-		 * - endAdornment: The end adornment to add to the value
+		 * - suffixContent: The end content to add to the value
 		 */
-		if (options.mutate) {
-			const { when, value: newValue, withTranslation } = options.mutate;
+		if (options?.mutate) {
+			const { when, value: newValue, withTranslation } = options?.mutate;
 			if (when) {
-				value = withTranslation ? translate(newValue) : newValue;
+				if (newValue) {
+					value = withTranslation ? translate(newValue) : newValue;
+				} else {
+					value = withTranslation ? translate(value) : value;
+				}
 			}
+		}
+
+		if (options?.rejectDefaultFallback) {
+			value = value?.replace(/[_*]/g, "");
 		}
 
 		return value;
 	};
 
-	return { translate, language: language as string, setLanguage };
+	return {
+		translate,
+		language: language as string,
+		setLanguage,
+		availableLanguages: (availableLanguages as unknown as string[]) ?? [],
+	};
 };
 
 /**
@@ -140,7 +206,7 @@ const getKey = (key: string, localeData: {}): string => {
 
 	// Check if the key contains a dot, indicating a nested key
 	if (!key.includes(".")) {
-		return localeData[key as keyof typeof localeData] || key;
+		return localeData[key as keyof typeof localeData] || `*_${key}_*`;
 	}
 
 	// In case of nested keys, split the key into an array and reduce it using the localeData object
@@ -148,7 +214,7 @@ const getKey = (key: string, localeData: {}): string => {
 		key
 			?.split(".")
 			?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
-			?.toString() || key
+			?.toString() || `*_${key}_*`
 	);
 };
 export default useLsmTranslation;

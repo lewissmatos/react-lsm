@@ -5,25 +5,34 @@ export interface ILsmContextProps {
 	translations: Record<string, any> | null;
 }
 
+export type LsmTextCase = "capitalize" | "uppercase" | "lowercase";
+export type LsmReplace = {
+	values: { [key: string]: string | number };
+	withTranslation?: boolean;
+};
+
+type LsmConditionalOptions = {
+	when?: boolean;
+	value?: string;
+	withTranslation?: boolean;
+};
+type LsmMutate = LsmConditionalOptions & {};
+type LsmFixContent = LsmConditionalOptions & {};
+
 // Define the interface for the hook options
-export type TranslationOptions = {
+export type LsmTranslationOptions = {
 	capitalize?: boolean;
 	uppercase?: boolean;
 	lowercase?: boolean;
-	replace?: {
-		values: { [key: string]: string | number };
-		withTranslation?: boolean;
-	};
-	mutate?: {
-		when: boolean;
-		value: string;
-		withTranslation?: boolean;
-	};
-	startAdornment?: string;
-	endAdornment?: string;
+	textCase?: LsmTextCase;
+	replace?: LsmReplace;
+	mutate?: LsmMutate;
+	prefixContent?: LsmFixContent;
+	suffixContent?: LsmFixContent;
+	rejectDefaultFallback?: boolean;
 };
 
-export interface ILsmConfig {
+export interface ILsmInitialConfig {
 	translations: Record<string, any>;
 	fallbackLanguage: string;
 }

@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import translations from "../examples/translations.json";
 import useLsmTranslation from "../src/context/useLsmTranslation";
-import { TranslationOptions } from "../src/interfaces/lsm.interfaces";
+import { LsmTranslationOptions } from "../src/interfaces/lsm.interfaces";
 
 // Mock component to test useLsmContext hook
 jest.mock("../src/context/LsmContext.tsx", () => ({
@@ -85,12 +85,12 @@ describe("useLsmTranslation", () => {
 	it("should return the key if no translation is found", () => {
 		const unknownKey = "unknown";
 		const { result } = renderHook(() => useLsmTranslation());
-		expect(result.current.translate(unknownKey)).toEqual(unknownKey);
+		expect(result.current.translate(unknownKey)).toEqual(`*_${unknownKey}_*`);
 	});
 
 	// Capitalize
 	it("should return a capitalized value if *capitalize* option is sent", () => {
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			capitalize: true,
 		};
 		const { result } = renderHook(() => useLsmTranslation());
@@ -102,7 +102,7 @@ describe("useLsmTranslation", () => {
 
 	// Uppercase
 	it("should return a upper value if *uppercase* option is sent", () => {
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			uppercase: true,
 		};
 		const { result } = renderHook(() => useLsmTranslation());
@@ -113,7 +113,7 @@ describe("useLsmTranslation", () => {
 
 	// Lowercase
 	it("should return a lower value if *lowercase* option is sent", () => {
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			lowercase: true,
 		};
 		const { result } = renderHook(() => useLsmTranslation());
@@ -124,7 +124,7 @@ describe("useLsmTranslation", () => {
 
 	// Replace
 	it("should return a replaced word in the value if *replace* option is sent", () => {
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			replace: { values: { value: 5 } },
 		};
 		const { result } = renderHook(() => useLsmTranslation());
@@ -146,7 +146,7 @@ describe("useLsmTranslation", () => {
 			})
 		);
 		const { result } = renderHook(() => useLsmTranslation());
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			replace: {
 				values: {
 					status: "orderStatuses.pending",
@@ -165,7 +165,7 @@ describe("useLsmTranslation", () => {
 
 	// Mutate With Translation
 	it("should return a mutated word in the value if *mutate* option is sent, with translation", () => {
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			mutate: {
 				when: true,
 				value: "loading",
@@ -182,7 +182,7 @@ describe("useLsmTranslation", () => {
 
 	// Mutate With Translation
 	it("should return the original value even if *mutate* option is sent but *when* is false", () => {
-		const options: TranslationOptions = {
+		const options: LsmTranslationOptions = {
 			mutate: {
 				when: false,
 				value: "loading",
@@ -193,5 +193,51 @@ describe("useLsmTranslation", () => {
 		expect(result.current.translate("submit", options)).toEqual(
 			translations["en-US"].submit
 		);
+	});
+
+	// TextCase
+
+	// Capitalize
+	it("should return a capitalized value if *textCase = capitalize* option is sent", () => {
+		const options: LsmTranslationOptions = {
+			textCase: "capitalize",
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("info", options)).toEqual(
+			translations["en-US"].info.charAt(0).toUpperCase() +
+				translations["en-US"].info.slice(1)
+		);
+	});
+
+	// Uppercase
+	it("should return a capitalized value if *textCase = uppercase* option is sent", () => {
+		const options: LsmTranslationOptions = {
+			textCase: "uppercase",
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("greeting", options)).toEqual(
+			translations["en-US"].greeting.toUpperCase()
+		);
+	});
+
+	// Lowercase
+	it("should return a capitalized value if *textCase = lowercase* option is sent", () => {
+		const options: LsmTranslationOptions = {
+			textCase: "lowercase",
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("greeting", options)).toEqual(
+			translations["en-US"].greeting.toLowerCase()
+		);
+	});
+
+	// Reject Default Fallback
+	it("should return the key if no translation is found", () => {
+		const options: LsmTranslationOptions = {
+			rejectDefaultFallback: true,
+		};
+		const unknownKey = "unknown";
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate(unknownKey, options)).toEqual(unknownKey);
 	});
 });
