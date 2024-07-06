@@ -1,7 +1,8 @@
 import {
-	TranslationOptions,
+	LsmTranslationOptions,
 	ILsmContextProps,
-	ILsmConfig,
+	ILsmInitialConfig,
+	LsmTextCase,
 } from "./interfaces/lsm.interfaces";
 import { LsmContext } from "./context/LsmContext";
 import LsmProvider from "./Provider/LsmProvider";
@@ -12,8 +13,9 @@ export {
 	initLsm,
 	LsmContext,
 	ILsmContextProps,
-	TranslationOptions,
-	ILsmConfig,
+	LsmTranslationOptions,
+	LsmTextCase,
+	ILsmInitialConfig,
 	LsmProvider,
 	useLsmTranslation,
 };

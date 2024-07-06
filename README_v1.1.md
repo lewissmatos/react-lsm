@@ -1,6 +1,6 @@
 # React Localization Storage Manager / react-lsm
 
-![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/63300185/39ef7d79-44f1-46a9-b349-61ba01c96881)
+![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/112432349/7cca6238-f412-4f98-86ad-f7d25ba6b6d8)
 
 ## Package
 
@@ -29,7 +29,7 @@ Simpler, smaller, and easier to use than other libraries.
 For more information, see the [Author Page](https://lewissmatos.dev)
 ``` -->
 
-#### Getting Started
+## Getting Started
 
 ### Installation
 
@@ -258,7 +258,7 @@ type TranslationOptions = {
 };
 ```
 
-#### Capitalize :a: @deprecated :warning:
+#### Capitalize :a:
 
 ```jsx
 import React from "react";
@@ -272,7 +272,7 @@ const Example = () => {
 };
 ```
 
-#### Uppercase :capital_abcd: @deprecated :warning:
+#### Uppercase :capital_abcd:
 
 ```jsx
 import React from "react";
@@ -286,7 +286,7 @@ const Example = () => {
 };
 ```
 
-#### Lowercase :abcd: @deprecated :warning:
+#### Lowercase :abcd:
 
 ```jsx
 import React from "react";
@@ -297,24 +297,6 @@ const Example = () => {
 	return <h1>{translate("greeting", { lowercase: true })}</h1>;
 	// Output: hello
 	// Output: hola
-};
-```
-
-#### TextCase :capital_abcd: @newest:white_check_mark:
-
-```jsx
-import React from "react";
-import { useLsmTranslation } from "react-lsm";
-
-const Example = () => {
-	const { translate } = useLsmTranslation();
-	return (
-		<h1>
-			{translate("greeting", {
-				textCase: "capitalize" | "uppercase" | "lowercase",
-			})}
-		</h1>
-	);
 };
 ```
 
@@ -498,7 +480,7 @@ const Example = () => {
 };
 ```
 
-#### Prefix Content :arrow_left:
+#### Start Adornment
 
 ```jsx
 import React from "react";
@@ -510,14 +492,14 @@ const { translate } = useLsmTranslation();
 const isLoading = true || false;
 return (
     <h1>
-        {translate("submit", { prefixContent: "🚀 " })})
+        {translate("submit", {prefixContent: "🚀 "})})
     </h1>
     // Output: 🚀 Submit
     // Output: 🚀 Enviar
 }
 ```
 
-#### Suffix Content :arrow_right:
+#### End Adornment
 
 ```jsx
 import React from "react";
@@ -529,7 +511,7 @@ const { translate } = useLsmTranslation();
 const isLoading = true || false;
 return (
     <h1>
-        {translate("greeting", { suffixContent: " 🇩🇴" })})
+        {translate("greeting", {suffixContent: " 🇩🇴"})})
     </h1>
     // Output: Hello 🇩🇴
     // Output: Hola 🇩🇴

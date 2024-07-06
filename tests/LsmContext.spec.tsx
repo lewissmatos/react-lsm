@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import React, { act } from "react";
+import React, { act, useMemo } from "react";
 import translations from "../examples/translations.json";
 import {
 	useLsmContext,
