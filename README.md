@@ -137,7 +137,7 @@ For convenience, the following examples are provided. We are going to use Englis
 ### Important! :warning:
 
 If you are using the **useLsmTranslation** hook in a component that implements **React.useEffect()** or **React.useLayoutEffect()**,
-that mutates a **React.useState** o **React.useRef** in the component,
+that mutates a **React.useState** o **React.useRef** asynchronously (e.g., fetching data from an API),
 you will need to wrap the component that uses the **state** in a **React.memo()** hook.
 This is to prevent the component from re-rendering or having layout issues.
 
@@ -150,7 +150,9 @@ import { useLsmTranslation } from "react-lsm";
 const Example = () => {
 	const { translate } = useLsmTranslation();
 	const fetchUserData = async () => {
-		const response = await fetch("https://api.example.com/user");
+		const response = await
+				fetch("https://api.example.com/user")
+				.then((data) => setUserData(data));	<- This is the important part
 		const data = await response.json();
 		return data;
 	};
@@ -158,7 +160,7 @@ const Example = () => {
 	const [userData, setUserData] = useState(null);
 
 	useEffect(() => {
-		fetchUserData().then((data) => setUserData(data)); 	<- This is the important part
+		fetchUserData();
 	}, []);
 
 	return (
@@ -192,15 +194,18 @@ const Example = () => {
 	const { translate } = useLsmTranslation();
 
 	const fetchUserData = async () => {
-		const response = await fetch("https://api.example.com/user");
-		const data = await response.json();
+		const response = await
+						fetch("https://api.example.com/user")
+						.then((data) => setUserData(data));		<- This is the important part
+
+		const data = await response.json()
 		return data;
 	};
 
 	const [userData, setUserData] = useState(null);
 
 	useEffect(() => {
-		fetchUserData().then((data) => setUserData(data)); 	<- This is the important part
+		fetchUserData()
 	}, []);
 
 	return (
@@ -258,7 +263,7 @@ type TranslationOptions = {
 };
 ```
 
-#### Capitalize :a: @deprecated :warning:
+#### Capitalize :a: - @deprecated :warning:
 
 ```jsx
 import React from "react";
@@ -272,7 +277,7 @@ const Example = () => {
 };
 ```
 
-#### Uppercase :capital_abcd: @deprecated :warning:
+#### Uppercase :capital_abcd: - @deprecated :warning:
 
 ```jsx
 import React from "react";
@@ -286,7 +291,7 @@ const Example = () => {
 };
 ```
 
-#### Lowercase :abcd: @deprecated :warning:
+#### Lowercase :abcd: - @deprecated :warning:
 
 ```jsx
 import React from "react";
@@ -300,7 +305,7 @@ const Example = () => {
 };
 ```
 
-#### TextCase :capital_abcd: @newest:white_check_mark:
+#### TextCase :capital_abcd: - @newest :white_check_mark:
 
 ```jsx
 import React from "react";

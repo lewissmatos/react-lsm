@@ -7,11 +7,12 @@ const LsmProvider: FC<
 > = ({ children, fallbackLanguage, translations }) => {
 	const localStorageLangKey = "lsmLanguage";
 	const initialLanguage = localStorage.getItem(localStorageLangKey);
+	const availableLanguages = Object.keys(translations ?? {});
 
 	/**
 	 * @param {string} initialLanguage - The initial language to use
 	 * @param {string} fallbackLanguage - The fallback language to use
-	 * @param {} translations - The translations to use
+	 * @param {object} translations - The translations to use
 	 * */
 	const [language, setLanguage] = useState<keyof typeof translations>(
 		initialLanguage ?? fallbackLanguage
@@ -21,6 +22,9 @@ const LsmProvider: FC<
 	 * @param lang - The language to set
 	 */
 	const onChangeLanguage = (lang: keyof typeof translations) => {
+		if (!availableLanguages.includes(lang)) {
+			throw new Error(`Language ${lang} is not available`);
+		}
 		setLanguage(lang);
 		return lang;
 	};
@@ -30,6 +34,7 @@ const LsmProvider: FC<
 			language,
 			setLanguage: onChangeLanguage,
 			translations,
+			availableLanguages,
 		};
 	}, [language, onChangeLanguage, translations]);
 
