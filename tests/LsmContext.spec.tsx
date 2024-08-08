@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import React, { act, useMemo } from "react";
+import React, { act } from "react";
 import translations from "../examples/translations.json";
 import {
 	useLsmContext,
@@ -15,6 +15,9 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 			setLanguage: jest.fn(),
 			translations,
 			availableLanguages: Object.keys(translations ?? {}),
+			initOptions: {
+				isDevMode: false,
+			},
 		}}
 	>
 		{children}

@@ -1,7 +1,10 @@
 import { renderHook } from "@testing-library/react";
 import translations from "../examples/translations.json";
 import useLsmTranslation from "../src/context/useLsmTranslation";
-import { LsmTranslationOptions } from "../src/interfaces/lsm.interfaces";
+import {
+	LsmTextCaseEnum,
+	LsmTranslationOptions,
+} from "../src/interfaces/lsm.interfaces";
 
 // Mock component to test useLsmContext hook
 jest.mock("../src/context/LsmContext.tsx", () => ({
@@ -201,7 +204,7 @@ describe("useLsmTranslation", () => {
 	// Capitalize
 	it("should return a capitalized value if *textCase = capitalize* option is sent", () => {
 		const options: LsmTranslationOptions = {
-			textCase: "capitalize",
+			textCase: LsmTextCaseEnum.Capitalize,
 		};
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate("info", options)).toEqual(
@@ -213,7 +216,7 @@ describe("useLsmTranslation", () => {
 	// Uppercase
 	it("should return a capitalized value if *textCase = uppercase* option is sent", () => {
 		const options: LsmTranslationOptions = {
-			textCase: "uppercase",
+			textCase: LsmTextCaseEnum.Uppercase,
 		};
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate("greeting", options)).toEqual(
@@ -224,7 +227,7 @@ describe("useLsmTranslation", () => {
 	// Lowercase
 	it("should return a capitalized value if *textCase = lowercase* option is sent", () => {
 		const options: LsmTranslationOptions = {
-			textCase: "lowercase",
+			textCase: LsmTextCaseEnum.Lowercase,
 		};
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate("greeting", options)).toEqual(
@@ -291,5 +294,16 @@ describe("useLsmTranslation", () => {
 	it("should return an array of available languages", () => {
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.availableLanguages).toEqual(["en-US", "es-MX"]);
+	});
+
+	// Override Language
+	it("should return the translation for the override language", () => {
+		const options: LsmTranslationOptions = {
+			overrideLanguage: "es-MX",
+		};
+		const { result } = renderHook(() => useLsmTranslation());
+		expect(result.current.translate("greeting", options)).toEqual(
+			translations["es-MX"].greeting
+		);
 	});
 });

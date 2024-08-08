@@ -1,17 +1,24 @@
-import { LsmTranslationOptions } from "../interfaces/lsm.interfaces";
+import {
+	LsmInitOptions,
+	LsmTranslationOptions,
+} from "../interfaces/lsm.interfaces";
 import { useLsmContext } from "./LsmContext";
 
 // Create the hook
 const useLsmTranslation = () => {
 	// Get the context
-	const { language, translations, setLanguage, availableLanguages } =
-		useLsmContext();
-
+	const {
+		language,
+		translations,
+		setLanguage,
+		availableLanguages,
+		initOptions,
+	} = useLsmContext();
 	/**
 	 * @function
 	 * @description Create the hook's main function to translate the key and apply the options to format the value
 	 * @param key The key to translate
-	 * @param {TranslationOptions} options The options to format the value with
+	 * @param {LsmTranslationOptions} options The options to format the value with
 	 * @throws Will throw an error if  language is not set, translations are not set, or if the locale for the language is not set.
 	 * @returns The translated value or the key if no translation is found.
 	 */
@@ -28,15 +35,26 @@ const useLsmTranslation = () => {
 
 		// Get the locale data using the language as a key
 		const localeData =
-			translations[language] || Object.values(translations)?.[0] || {};
+			translations[options?.overrideLanguage ?? language] ||
+			Object.values(translations)?.[0] ||
+			{};
 
 		// Get the translated value
 		const translatedValue = getKey(key, localeData) as string;
 
 		// Format the value using the options
-		const value =
+		let value =
 			(options ? formatValue(translatedValue, options) : translatedValue) ||
 			`_${key}_`;
+
+		if (initOptions?.isDevMode && value === `_${key}_`) {
+			console.warn(`Missing translation for key: ${key}`);
+		}
+
+		if (initOptions?.disableDefaultFallback) {
+			return (value = value.replace(/[_*]/g, ""));
+		}
+
 		return value as string;
 	};
 
@@ -197,7 +215,7 @@ const useLsmTranslation = () => {
  * @param localeData The json object containing the translations
  * @returns The key to use for the translation, or the key if no translation is found
  */
-const getKey = (key: string, localeData: {}): string => {
+function getKey(key: string, localeData: {}): string {
 	// Check if the key is empty
 	if (!key) {
 		return "";
@@ -215,5 +233,5 @@ const getKey = (key: string, localeData: {}): string => {
 			?.reduce((acc, cur) => acc?.[cur as keyof {}], localeData)
 			?.toString() || `_${key}_`
 	);
-};
+}
 export default useLsmTranslation;

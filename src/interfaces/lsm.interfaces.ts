@@ -4,9 +4,22 @@ export interface ILsmContextProps {
 	setLanguage: (lang: string) => void;
 	translations: Record<string, any> | null;
 	availableLanguages: string[];
+	initOptions?: LsmInitOptions;
+}
+export type LsmInitOptions = {
+	isDevMode?: boolean;
+	disableDefaultFallback?: boolean;
+};
+export enum LsmTextCaseEnum {
+	Capitalize = "capitalize",
+	Uppercase = "uppercase",
+	Lowercase = "lowercase",
 }
 
-export type LsmTextCase = "capitalize" | "uppercase" | "lowercase";
+export type LsmTextCase =
+	| LsmTextCaseEnum.Capitalize
+	| LsmTextCaseEnum.Uppercase
+	| LsmTextCaseEnum.Lowercase;
 export type LsmReplace = {
 	values: { [key: string]: string | number };
 	withTranslation?: boolean;
@@ -31,9 +44,11 @@ export type LsmTranslationOptions = {
 	prefixContent?: LsmFixContent;
 	suffixContent?: LsmFixContent;
 	rejectDefaultFallback?: boolean;
+	overrideLanguage?: string;
 };
 
 export interface ILsmInitialConfig {
 	translations: Record<string, any>;
 	fallbackLanguage: string;
+	initOptions?: LsmInitOptions;
 }

@@ -4,7 +4,7 @@ import { ILsmInitialConfig } from "../interfaces/lsm.interfaces";
 
 const LsmProvider: FC<
 	ILsmInitialConfig & { children?: JSX.Element | JSX.Element[] }
-> = ({ children, fallbackLanguage, translations }) => {
+> = ({ children, fallbackLanguage, translations, initOptions }) => {
 	const localStorageLangKey = "lsmLanguage";
 	const initialLanguage = localStorage.getItem(localStorageLangKey);
 	const availableLanguages = Object.keys(translations ?? {});
@@ -35,6 +35,7 @@ const LsmProvider: FC<
 			setLanguage: onChangeLanguage,
 			translations,
 			availableLanguages,
+			initOptions,
 		};
 	}, [language, onChangeLanguage, translations]);
 

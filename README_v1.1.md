@@ -550,3 +550,23 @@ const Example = () => {
 	 */
 };
 ```
+
+#### Override Language :arrows_counterclockwise:
+
+It does not change the language of the application, it only changes the language of the translation.
+
+```jsx
+import React from "react";
+import { useLsmTranslation } from "react-lsm";
+
+const Example = () => {
+	const { translate } = useLsmTranslation();
+
+	const isLoading = true || false;
+	return (
+		<h1>
+				{translate("greeting", {overrideLanguage: "es-MX"})})
+		</h1>
+    // Output: Hola
+}
+```

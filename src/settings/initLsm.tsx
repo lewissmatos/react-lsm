@@ -1,5 +1,6 @@
 import React from "react";
 import LsmProvider from "../Provider/LsmProvider";
+import { LsmInitOptions } from "../interfaces/lsm.interfaces";
 
 /**
  * @param {string} fallbackLanguage
@@ -13,7 +14,8 @@ import LsmProvider from "../Provider/LsmProvider";
  */
 const initLsm = (
 	fallbackLanguage: string,
-	translations: { [key: string]: any }
+	translations: { [key: string]: any },
+	initOptions?: LsmInitOptions
 ) => {
 	// Return a component
 	const ConfiguredLsmProvider: React.FC<{
@@ -23,6 +25,7 @@ const initLsm = (
 			<LsmProvider
 				fallbackLanguage={fallbackLanguage}
 				translations={translations}
+				initOptions={initOptions}
 			>
 				{children}
 			</LsmProvider>
