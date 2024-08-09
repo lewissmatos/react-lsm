@@ -1,10 +1,9 @@
-import { flattenObject, FlattenObjectKeyFormats } from "../utils/flattenObject";
+import { flattenObject } from "../utils/flattenObject";
 import fs from "fs";
 import path from "path";
 
 export const generateEnum = (
 	translationsPath: string,
-	enumKeysFormat?: FlattenObjectKeyFormats,
 	newOutputPath?: string
 ) => {
 	if (!translationsPath) {
@@ -22,7 +21,6 @@ export const generateEnum = (
 
 	const flattenedTranslations = flattenObject({
 		obj: translations,
-		format: enumKeysFormat,
 	});
 
 	const enumEntries = Object.entries(flattenedTranslations)

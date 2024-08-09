@@ -580,12 +580,11 @@ $ npm install -g react-lsm
 ```
 
 ```sh
-$ lsm-generate-enum <translationsPath> [enumKeysFormat] [outputDir]
+$ lsm-generate-enum <translationsPath> [outputDir]
 ```
 
 - `<translationsPath>`: The path to the translations file (required).
-
-- `[enumKeysFormat]`: The format of the enum keys (optional, default: "snake"). Allowed values are "snake", "camel", "pascal", "upper".
+  It could be any of the translation objects you use, due to all the keys should be the same in all the translation objects
 
 - `[outputDir]`: The path to the output directory (optional, default: "src/react-lsm").
 
@@ -601,49 +600,4 @@ $ lsm-generate-enum <translationsPath> [enumKeysFormat] [outputDir]
 		"contact": "Contact"
 	}
 }
-```
-
-#### Enum variants
-
-```typescript
-
-- **snake**:
-
-  export enum EnUs {
-    greeting = "greeting",
-    farewell = "farewell",
-    navbar_home = "navbar.home",
-    navbar_about = "navbar.about",
-    navbar_contact = "navbar.contact"
-  }
-
-- **camel**:
-
-  export enum EnUs {
-    greeting = "greeting",
-    farewell = "farewell",
-    navbarHome = "navbar.home",
-    navbarAbout = "navbar.about",
-    navbarContact = "navbar.contact"
-  }
-
-- **pascal**:
-
-  export enum EnUs {
-    Greeting = "greeting",
-    Farewell = "farewell",
-    NavbarHome = "navbar.home",
-    NavbarAbout = "navbar.about",
-    NavbarContact = "navbar.contact"
-  }
-
-- **upper**:
-
-  export enum EnUs {
-    GREETING = "greeting",
-    FAREWELL = "farewell",
-    NAVBAR_HOME = "navbar.home",
-    NAVBAR_ABOUT = "navbar.about",
-    NAVBAR_CONTACT = "navbar.contact"
-  }
 ```
