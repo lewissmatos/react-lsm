@@ -5,8 +5,8 @@ import { FlattenObjectKeyFormats } from "./utils/flattenObject";
 
 // Get the arguments from the command line arguments
 /**
- * 1. @arg translationsPath
- * 2. @arg enumName
+ * 1. @command ::fallback:: lsm-generate-enum
+ * 2. @arg translationsPath
  * 3. @arg enumKeysFormat
  * 4. @arg outputDir
  */
@@ -19,14 +19,6 @@ import { FlattenObjectKeyFormats } from "./utils/flattenObject";
 const translationsPath = process.argv[2];
 
 /**
- * @arg enumName
- * @required
- * @description The name of the enum
- * @note If the directory does not exist, it will be created
- */
-const enumName = process.argv[3];
-
-/**
  * @arg enumKeysFormat
  * @optional
  * @default "snake_case"
@@ -34,7 +26,7 @@ const enumName = process.argv[3];
  * @types "snake" | "camel" | "pascal" | "upper"
  */
 
-let enumKeysFormat = process.argv[4] as FlattenObjectKeyFormats;
+let enumKeysFormat = process.argv[3] as FlattenObjectKeyFormats;
 const allowedFormats: FlattenObjectKeyFormats[] = [
 	"snake",
 	"camel",
@@ -54,9 +46,9 @@ if (!allowedFormats.includes(enumKeysFormat)) {
  * @note If the directory does not exist, it will be created
  * @note If you want to use this argument but you don't want to change the default enum keys format, you must use '_' as third argument
  */
-const outputDir = process.argv[5];
+const outputDir = process.argv[4];
 
 console.log(`Translations Path: ${translationsPath}`);
-console.log(`Enum Name: ${enumName}`);
+console.log(`Enum Name: TranslationKeysEnum`);
 console.log(`Output Dir: ${outputDir}`);
-generateEnum(translationsPath, enumName, enumKeysFormat, outputDir);
+generateEnum(translationsPath, enumKeysFormat, outputDir);

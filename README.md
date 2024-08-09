@@ -580,16 +580,14 @@ $ npm install -g react-lsm
 ```
 
 ```sh
-$ lsm-generate-enum <translationsPath> <enumName> [enumKeysFormat] [outputDir]
+$ lsm-generate-enum <translationsPath> [enumKeysFormat] [outputDir]
 ```
 
 - `<translationsPath>`: The path to the translations file (required).
 
-- `<enumName>`: The name of the enum to be generated (required).
-
 - `[enumKeysFormat]`: The format of the enum keys (optional, default: "snake"). Allowed values are "snake", "camel", "pascal", "upper".
 
-- `[outputDir]`: The path to the output directory (optional, default: "src/react-lsm/enums").
+- `[outputDir]`: The path to the output directory (optional, default: "src/react-lsm").
 
 #### Example
 

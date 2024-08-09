@@ -1,6 +1,6 @@
 {
 	"name": "react-lsm",
-	"version": "1.2.4",
+	"version": "1.2.5",
 	"description": "A lightweight react hook for managing localization languages. LSM stands for Localization Storage Manager.",
 	"main": "dist/index.js",
 	"types": "./src/index.d.ts",
