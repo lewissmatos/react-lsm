@@ -1,0 +1,9 @@
+{
+	"profile": "Profile",
+	"actions": {
+		"read": "Read",
+		"edit": "Edit",
+		"save": "Save",
+		"close": "Close"
+	}
+}

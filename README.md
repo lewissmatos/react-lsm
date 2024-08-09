@@ -1,8 +1,6 @@
 # React Localization Storage Manager / react-lsm
 
-![NPM Downloads](https://img.shields.io/npm/dw/react-lsm)
-
-![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/63300185/39ef7d79-44f1-46a9-b349-61ba01c96881)
+![react-jumbo](https://github.com/lewissmatos/react-lsm/assets/112432349/7cca6238-f412-4f98-86ad-f7d25ba6b6d8)
 
 ## Package
 
@@ -31,7 +29,7 @@ Simpler, smaller, and easier to use than other libraries.
 For more information, see the [Author Page](https://lewissmatos.dev)
 ``` -->
 
-#### Getting Started
+## Getting Started
 
 ### Installation
 
@@ -139,7 +137,7 @@ For convenience, the following examples are provided. We are going to use Englis
 ### Important! :warning:
 
 If you are using the **useLsmTranslation** hook in a component that implements **React.useEffect()** or **React.useLayoutEffect()**,
-that mutates a **React.useState** o **React.useRef** asynchronously (e.g., fetching data from an API),
+that mutates a **React.useState** o **React.useRef** in the component,
 you will need to wrap the component that uses the **state** in a **React.memo()** hook.
 This is to prevent the component from re-rendering or having layout issues.
 
@@ -152,9 +150,7 @@ import { useLsmTranslation } from "react-lsm";
 const Example = () => {
 	const { translate } = useLsmTranslation();
 	const fetchUserData = async () => {
-		const response = await
-				fetch("https://api.example.com/user")
-				.then((data) => setUserData(data));	<- This is the important part
+		const response = await fetch("https://api.example.com/user");
 		const data = await response.json();
 		return data;
 	};
@@ -162,7 +158,7 @@ const Example = () => {
 	const [userData, setUserData] = useState(null);
 
 	useEffect(() => {
-		fetchUserData();
+		fetchUserData().then((data) => setUserData(data)); 	<- This is the important part
 	}, []);
 
 	return (
@@ -196,18 +192,15 @@ const Example = () => {
 	const { translate } = useLsmTranslation();
 
 	const fetchUserData = async () => {
-		const response = await
-						fetch("https://api.example.com/user")
-						.then((data) => setUserData(data));		<- This is the important part
-
-		const data = await response.json()
+		const response = await fetch("https://api.example.com/user");
+		const data = await response.json();
 		return data;
 	};
 
 	const [userData, setUserData] = useState(null);
 
 	useEffect(() => {
-		fetchUserData()
+		fetchUserData().then((data) => setUserData(data)); 	<- This is the important part
 	}, []);
 
 	return (
@@ -265,7 +258,7 @@ type TranslationOptions = {
 };
 ```
 
-#### Capitalize :a: - @deprecated :warning:
+#### Capitalize :a:
 
 ```jsx
 import React from "react";
@@ -279,7 +272,7 @@ const Example = () => {
 };
 ```
 
-#### Uppercase :capital_abcd: - @deprecated :warning:
+#### Uppercase :capital_abcd:
 
 ```jsx
 import React from "react";
@@ -293,7 +286,7 @@ const Example = () => {
 };
 ```
 
-#### Lowercase :abcd: - @deprecated :warning:
+#### Lowercase :abcd:
 
 ```jsx
 import React from "react";
@@ -304,24 +297,6 @@ const Example = () => {
 	return <h1>{translate("greeting", { lowercase: true })}</h1>;
 	// Output: hello
 	// Output: hola
-};
-```
-
-#### TextCase :capital_abcd: - @newest :white_check_mark:
-
-```jsx
-import React from "react";
-import { useLsmTranslation } from "react-lsm";
-
-const Example = () => {
-	const { translate } = useLsmTranslation();
-	return (
-		<h1>
-			{translate("greeting", {
-				textCase: "capitalize" | "uppercase" | "lowercase",
-			})}
-		</h1>
-	);
 };
 ```
 
@@ -505,7 +480,7 @@ const Example = () => {
 };
 ```
 
-#### Prefix Content :arrow_left:
+#### Start Adornment
 
 ```jsx
 import React from "react";
@@ -517,14 +492,14 @@ const { translate } = useLsmTranslation();
 const isLoading = true || false;
 return (
     <h1>
-        {translate("submit", { prefixContent: "🚀 " })})
+        {translate("submit", {prefixContent: "🚀 "})})
     </h1>
     // Output: 🚀 Submit
     // Output: 🚀 Enviar
 }
 ```
 
-#### Suffix Content :arrow_right:
+#### End Adornment
 
 ```jsx
 import React from "react";
@@ -536,7 +511,7 @@ const { translate } = useLsmTranslation();
 const isLoading = true || false;
 return (
     <h1>
-        {translate("greeting", { suffixContent: " 🇩🇴" })})
+        {translate("greeting", {suffixContent: " 🇩🇴"})})
     </h1>
     // Output: Hello 🇩🇴
     // Output: Hola 🇩🇴
@@ -574,4 +549,103 @@ const Example = () => {
 	 * Output: Cargando...
 	 */
 };
+```
+
+#### Override Language :arrows_counterclockwise:
+
+It does not change the language of the application, it only changes the language of the translation.
+
+```jsx
+import React from "react";
+import { useLsmTranslation } from "react-lsm";
+
+const Example = () => {
+	const { translate } = useLsmTranslation();
+
+	const isLoading = true || false;
+	return (
+		<h1>
+				{translate("greeting", {overrideLanguage: "es-MX"})})
+		</h1>
+    // Output: Hola
+}
+```
+
+## CLI Commands
+
+### Generate Enum
+
+```sh
+$ npm install -g react-lsm
+```
+
+```sh
+$ lsm-generate-enum <translationsPath> <enumName> [enumKeysFormat] [outputDir]
+```
+
+- `<translationsPath>`: The path to the translations file (required).
+
+- `<enumName>`: The name of the enum to be generated (required).
+
+- `[enumKeysFormat]`: The format of the enum keys (optional, default: "snake"). Allowed values are "snake", "camel", "pascal", "upper".
+
+- `[outputDir]`: The path to the output directory (optional, default: "src/react-lsm/enums").
+
+#### Example
+
+```json
+{
+	"greeting": "Hello",
+	"farewell": "Goodbye",
+	"navbar": {
+		"home": "Home",
+		"about": "About",
+		"contact": "Contact"
+	}
+}
+```
+
+#### Enum variants
+
+```typescript
+
+- **snake**:
+
+  export enum EnUs {
+    greeting = "greeting",
+    farewell = "farewell",
+    navbar_home = "navbar.home",
+    navbar_about = "navbar.about",
+    navbar_contact = "navbar.contact"
+  }
+
+- **camel**:
+
+  export enum EnUs {
+    greeting = "greeting",
+    farewell = "farewell",
+    navbarHome = "navbar.home",
+    navbarAbout = "navbar.about",
+    navbarContact = "navbar.contact"
+  }
+
+- **pascal**:
+
+  export enum EnUs {
+    Greeting = "greeting",
+    Farewell = "farewell",
+    NavbarHome = "navbar.home",
+    NavbarAbout = "navbar.about",
+    NavbarContact = "navbar.contact"
+  }
+
+- **upper**:
+
+  export enum EnUs {
+    GREETING = "greeting",
+    FAREWELL = "farewell",
+    NAVBAR_HOME = "navbar.home",
+    NAVBAR_ABOUT = "navbar.about",
+    NAVBAR_CONTACT = "navbar.contact"
+  }
 ```
