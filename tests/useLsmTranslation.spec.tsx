@@ -1,10 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import translations from "../examples/translations.json";
 import useLsmTranslation from "../src/context/useLsmTranslation";
-import {
-	LsmTextCaseEnum,
-	LsmTranslationOptions,
-} from "../src/interfaces/lsm.interfaces";
+import { LsmTranslationOptions } from "../src/interfaces/lsm.interfaces";
 
 // Mock component to test useLsmContext hook
 jest.mock("../src/context/LsmContext.tsx", () => ({
@@ -204,7 +201,7 @@ describe("useLsmTranslation", () => {
 	// Capitalize
 	it("should return a capitalized value if *textCase = capitalize* option is sent", () => {
 		const options: LsmTranslationOptions = {
-			textCase: LsmTextCaseEnum.Capitalize,
+			textCase: "capitalize",
 		};
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate("info", options)).toEqual(
@@ -216,7 +213,7 @@ describe("useLsmTranslation", () => {
 	// Uppercase
 	it("should return a capitalized value if *textCase = uppercase* option is sent", () => {
 		const options: LsmTranslationOptions = {
-			textCase: LsmTextCaseEnum.Uppercase,
+			textCase: "uppercase",
 		};
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate("greeting", options)).toEqual(
@@ -227,7 +224,7 @@ describe("useLsmTranslation", () => {
 	// Lowercase
 	it("should return a capitalized value if *textCase = lowercase* option is sent", () => {
 		const options: LsmTranslationOptions = {
-			textCase: LsmTextCaseEnum.Lowercase,
+			textCase: "lowercase",
 		};
 		const { result } = renderHook(() => useLsmTranslation());
 		expect(result.current.translate("greeting", options)).toEqual(

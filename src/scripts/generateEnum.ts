@@ -2,10 +2,7 @@ import { flattenObject } from "../utils/flattenObject";
 import fs from "fs";
 import path from "path";
 
-export const generateEnum = (
-	translationsPath: string,
-	newOutputPath?: string
-) => {
+export const generateEnum = (translationsPath: string, enumName?: string) => {
 	if (!translationsPath) {
 		console.error("Please provide the path to the translations file.");
 		process.exit(1);
@@ -27,19 +24,14 @@ export const generateEnum = (
 		.map(([key, value]) => `    ${key.replace(/-/g, "_")} = "${value}"`)
 		.join(",\n");
 
-	const enumContent = `export enum TranslationKeysEnum {\n${enumEntries}\n}\n`;
+	const enumContent = `export enum ${enumName} {\n${enumEntries}\n}\n`;
 
-	const outputDir = path.resolve(
-		process.cwd(),
-		newOutputPath ?? "src/react-lsm"
-	);
-	console.log(`Output Directory: ${outputDir}`);
+	const outputDir = path.resolve(process.cwd(), "src/react-lsm");
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
 	}
-
-	const outputPath = path.join(outputDir, `TranslationKeysEnum.ts`);
+	const outputPath = path.join(outputDir, `${enumName}.ts`);
 	fs.writeFileSync(outputPath, enumContent);
 
-	console.log(`Enum TranslationKeysEnum generated successfully!`);
+	console.log(`Enum ${enumName} generated successfully!`);
 };

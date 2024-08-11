@@ -1,12 +1,11 @@
 #!/usr/bin/env ts-node
-
 import { generateEnum } from "./scripts/generateEnum";
 
 // Get the arguments from the command line arguments
 /**
  * 1. @command ::fallback:: lsm-generate-enum
  * 2. @arg translationsPath
- * 3. @arg outputDir
+ * 3. @arg enumName
  */
 
 /**
@@ -17,16 +16,14 @@ import { generateEnum } from "./scripts/generateEnum";
 const translationsPath = process.argv[2];
 
 /**
- * @arg outputDir
+ * @arg enumName
  * @optional
- * @description The path to the output directory
- * @default "src/react-lsm/enums"
- * @note If the directory does not exist, it will be created
- * @note It could be any of the translation objects you use, due to all the keys should be the same in all the translation objects
+ * @description The name of the enum to be generated
+ * @default "LsmTranslationKeys"
  */
-const outputDir = process.argv[3];
+const enumName = process.argv[3] ?? "LsmTranslationKeys";
 
 console.log(`Translations Path: ${translationsPath}`);
-console.log(`Enum Name: TranslationKeysEnum`);
-console.log(`Output Dir: ${outputDir}`);
-generateEnum(translationsPath, outputDir);
+console.log(`Enum Name: ${enumName}`);
+
+generateEnum(translationsPath, enumName);

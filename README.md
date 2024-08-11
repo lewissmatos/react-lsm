@@ -580,13 +580,13 @@ $ npm install -g react-lsm
 ```
 
 ```sh
-$ lsm-generate-enum <translationsPath> [outputDir]
+$ lsm-generate-enum <translationsPath> [enumName]
 ```
 
 - `<translationsPath>`: The path to the translations file (required).
-  It could be any of the translation objects you use, due to all the keys should be the same in all the translation objects
+  It could be any of the translation objects you're using, due to all the keys should be the same in all the translation objects
 
-- `[outputDir]`: The path to the output directory (optional, default: "src/react-lsm").
+- `[enumName]`: The name of the **enum** to be generated (optional, default: "LsmTranslationKeys").
 
 #### Example
 
@@ -599,5 +599,19 @@ $ lsm-generate-enum <translationsPath> [outputDir]
 		"about": "About",
 		"contact": "Contact"
 	}
+}
+```
+
+```sh
+$ lsm-generate-enum ./translations.json LsmTranslationKeys
+```
+
+```ts
+enum LsmTranslationKeys {
+	greeting = "Hello",
+	farewell = "Goodbye",
+	navbarHome = "Home",
+	navbarAbout = "About",
+	navbarContact = "Contact",
 }
 ```

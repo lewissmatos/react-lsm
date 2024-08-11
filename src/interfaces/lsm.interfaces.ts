@@ -10,16 +10,8 @@ export type LsmInitOptions = {
 	isDevMode?: boolean;
 	disableDefaultFallback?: boolean;
 };
-export enum LsmTextCaseEnum {
-	Capitalize = "capitalize",
-	Uppercase = "uppercase",
-	Lowercase = "lowercase",
-}
 
-export type LsmTextCase =
-	| LsmTextCaseEnum.Capitalize
-	| LsmTextCaseEnum.Uppercase
-	| LsmTextCaseEnum.Lowercase;
+export type LsmTextCase = "capitalize" | "uppercase" | "lowercase";
 export type LsmReplace = {
 	values: { [key: string]: string | number };
 	withTranslation?: boolean;
