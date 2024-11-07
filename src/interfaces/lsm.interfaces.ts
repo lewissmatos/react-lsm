@@ -28,6 +28,7 @@ export type LsmTranslationOptions = {
 	textCase?: LsmTextCase;
 	replace?: LsmReplace;
 	mutate?: LsmMutate;
+	formatAsCurrency?: boolean;
 	prefixContent?: LsmFixContent;
 	suffixContent?: LsmFixContent;
 	rejectDefaultFallback?: boolean;

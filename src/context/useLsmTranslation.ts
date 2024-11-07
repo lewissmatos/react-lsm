@@ -1,6 +1,6 @@
 import { LsmTranslationOptions } from "../interfaces/lsm.interfaces";
+import { valueToCurrency } from "../utils/currencyFormatter";
 import { useLsmContext } from "./LsmContext";
-
 // Create the hook
 const useLsmTranslation = () => {
 	// Get the context
@@ -52,6 +52,7 @@ const useLsmTranslation = () => {
 	 * - textCase: Capitalize, uppercase, or lowercase the value
 	 * - replace: Replace the value with the specified values
 	 * - mutate: Mutate the value based on the specified options
+	 * - formatAsCurrency: Parses the value as a currency.
 	 */
 	const formatValue = (
 		value: string,
@@ -178,6 +179,12 @@ const useLsmTranslation = () => {
 		if (options?.rejectDefaultFallback) {
 			value = value?.replace(/[_*]/g, "");
 		}
+
+		/**
+		 * This is an extra functionality. 
+		 * If used, all the other flags will be ignored since it will be converted to a number.
+		 */
+		if (options.formatAsCurrency) valueToCurrency(value)
 
 		return value;
 	};
